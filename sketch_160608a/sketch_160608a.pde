@@ -1,16 +1,14 @@
 
 int currentFrame=0;
-int boyMoveY=0;
-
-PImage obj;
-float objX=720;
 float jump=0;
 
 int blockXsize = 50;
 int blockYsize = 50;
 int boyXsize = 64;
 int boyYsize = 120;
-  Player player;
+
+Player player;
+Block box;
 
 class Player {
   float x;
@@ -41,8 +39,9 @@ class Player {
     image(boy[currentFrame], x, y);
     currentFrame = (currentFrame+1) % imageCount;
   }
+  
   void jump() {
-    
+    y-=20;
   }
 }
 
@@ -53,8 +52,8 @@ class Block {
   float right;
   float top;
   float bottom;
-  
-  Block(float tempX, float tempY){
+
+  Block(float tempX, float tempY) {
     x = tempX;
     y = tempY;
     left = x - (blockXsize / 2);
@@ -62,26 +61,40 @@ class Block {
     top = y - (blockYsize / 2);
     bottom = y + (blockYsize / 2);
   }
+  void display() {
+    rect(x, y, blockXsize, blockYsize);
+  }
+  void move() {
+    if (x < -110 ) {
+      x = 1050;
+    } else {
+      x-=20;
+    }
+    
+    left = x - (blockXsize / 2);
+    right = x + (blockXsize / 2);
+    top = y - (blockYsize / 2);
+    bottom = y + (blockYsize / 2);
+  }
 }
-void setup()
-{
+
+void setup() {
   size(900, 480);
   background(255);
   frameRate(18);
-
+  box = new Block(800, 350);
   player = new Player(80, 344);
-  obj = loadImage("T.png");
   imageMode(CENTER);
 }
 
-void moveObj()
-{
-  rect(objX, 350, 50, 50);
-
-  if (objX < -110 )
-  {
-    objX = 1050;
-  } else   objX-=20;
+void collision() {
+  println("Called collision.");
+   if (player.left < box.right
+   && player.right > box.left
+   && player.top > box.bottom
+   && player.bottom < box.top) {
+     println("충돌");
+   }
 }
 
 void draw()
@@ -91,16 +104,12 @@ void draw()
   fill(0);
   rect(0, 400, width, 80);
   player.display();
-  //drawBoy();
-  /* if (mousePressed) {
-   boyMoveY-=20;
-   if (boyMoveY<-200) boyMoveY = -200;
-   } else {
-   if (boyMoveY<0) boyMoveY+=10;
-   currentFrame = (currentFrame+1) % imageCount;
-   }
-   
-   moveObj();
-   
-   //jump+=0.02;*/
+  
+  if (mousePressed) {
+    player.jump();
+  }
+  
+  box.display();
+  box.move();
+  collision();
 }
