@@ -39,9 +39,13 @@ class Player {
     image(boy[currentFrame], x, y);
     currentFrame = (currentFrame+1) % imageCount;
   }
-  
+
   void jump() {
     y-=20;
+    left = x-(boyXsize/2);
+    right = x+(boyXsize/2);
+    top = y-(boyYsize/2);
+    bottom = y+(boyXsize/2);
   }
 }
 
@@ -70,11 +74,11 @@ class Block {
     } else {
       x-=20;
     }
-    
-    left = x - (blockXsize / 2);
-    right = x + (blockXsize / 2);
-    top = y - (blockYsize / 2);
-    bottom = y + (blockYsize / 2);
+
+    left = x;
+    right = x + blockXsize;
+    top = y;
+    bottom = y + blockYsize;
   }
 }
 
@@ -87,14 +91,14 @@ void setup() {
   imageMode(CENTER);
 }
 
-void collision() {
-  println("Called collision.");
-   if (player.left < box.right
-   && player.right > box.left
-   && player.top > box.bottom
-   && player.bottom < box.top) {
-     println("충돌");
-   }
+boolean isCollision() {
+  if (player.left < box.right
+    && player.right > box.left
+    && player.top < box.bottom
+    && player.bottom > box.top) {
+    return true;
+  }
+  return false;
 }
 
 void draw()
@@ -104,12 +108,12 @@ void draw()
   fill(0);
   rect(0, 400, width, 80);
   player.display();
-  
+
   if (mousePressed) {
     player.jump();
   }
-  
+
   box.display();
   box.move();
-  collision();
+  if (isCollision()) println("collision");
 }
