@@ -7,6 +7,11 @@ int blockYsize = 50;
 int boyXsize = 64;
 int boyYsize = 120;
 
+float t = 1;
+boolean tPoint = false;
+float s = 0;
+boolean isJump = false;
+
 Player player;
 Block box;
 
@@ -23,10 +28,10 @@ class Player {
   Player(float tempX, float tempY) {
     x = tempX;
     y = tempY;
-    left = x-(boyXsize/2);
-    right = x+(boyXsize/2);
-    top = y-(boyYsize/2);
-    bottom = y+(boyXsize/2);
+    left = x - (boyXsize / 2);
+    right = x + (boyXsize / 2);
+    top = y - (boyYsize / 2);
+    bottom = y + (boyXsize / 2);
 
     boy[0]= loadImage("boy1.png");
     boy[1]= loadImage("boy2.png");
@@ -37,15 +42,35 @@ class Player {
 
   void display() {
     image(boy[currentFrame], x, y);
-    currentFrame = (currentFrame+1) % imageCount;
+    if(!isJump){
+      currentFrame = (currentFrame+1) % imageCount;
+    }
+    else currentFrame = 3;
   }
 
   void jump() {
-    y-=20;
-    left = x-(boyXsize/2);
-    right = x+(boyXsize/2);
-    top = y-(boyYsize/2);
-    bottom = y+(boyXsize/2);
+    if (tPoint) {
+      t+=0.2;
+      s = 5 * t - 9*t*t*0.5;
+      println(t, s);
+      y = y+s;
+      if (t > 3) {
+        tPoint = false;
+      }
+    } else {
+      s = 5 * t - 9*t*t*0.5;
+      println(s);
+      y = y-s;
+      t-=0.2;
+      if (t <= 1) {
+        isJump = false;
+      }
+    }
+
+    left = x - (boyXsize / 2);
+    right = x + (boyXsize / 2);
+    top = y - (boyYsize / 2);
+    bottom = y + (boyXsize / 2);
   }
 }
 
@@ -68,6 +93,7 @@ class Block {
   void display() {
     rect(x, y, blockXsize, blockYsize);
   }
+
   void move() {
     if (x < -110 ) {
       x = 1050;
@@ -101,19 +127,24 @@ boolean isCollision() {
   return false;
 }
 
+void keyPressed() {
+  isJump = true;
+  tPoint = true;
+}
+
 void draw()
 {
-  frameRate(10+jump);
+  frameRate(18);
   background(230);
   fill(0);
   rect(0, 400, width, 80);
   player.display();
-
-  if (mousePressed) {
-    player.jump();
-  }
-
   box.display();
   box.move();
-  if (isCollision()) println("collision");
+  if (isCollision()) {
+    println("collision");
+  }
+  if (isJump) {
+    player.jump();
+  }
 }
