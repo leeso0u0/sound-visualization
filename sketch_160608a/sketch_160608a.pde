@@ -75,5 +75,14 @@ void draw()
       player.jump();
     }
     player.display();
-   println(coinCount);
+   //println(coinCount);
+   if (coinCount < 50) {
+    textSize(32); 
+    text(coinCount, 30, 50);
+  }
+  else{
+    background(0);
+    fill(255);
+    text("The End", width/2-90, height/2);
+  }
 }
