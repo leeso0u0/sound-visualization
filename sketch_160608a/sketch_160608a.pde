@@ -22,8 +22,11 @@ Player player;
 ArrayList<Block> boxes = new ArrayList<Block>();
 ArrayList<Coin> coins = new ArrayList<Coin>();
 
+PImage bg ;
+
 void setup() {
   size(900, 480);
+  bg = loadImage("bg.png");
   background(255);
   frameRate(12);
   player = new Player(80, 284);
@@ -40,12 +43,16 @@ void draw()
 {
   frameRate(18);
   background(230);
+  pushMatrix();
+  scale(0.2);
+  image(bg,-frameCount,0);
+  popMatrix();
   fill(0);
   rect(0, 400, width, 80);
   
   for ( Block box : boxes) {
     if (player.isCollision(box)) {
-        println("충돌");
+        println("Crash");
     }
     box.move();
     box.display();
@@ -76,7 +83,7 @@ void draw()
     }
     player.display();
    //println(coinCount);
-   if (coinCount < 50) {
+   if (coinCount < 30) {
     textSize(32); 
     text(coinCount, 30, 50);
   }
