@@ -10,8 +10,8 @@ class Unit {
     int Ysize;
 
     boolean isCollision(Unit o) {
-        return (this.left+40 < o.right &&
-            this.right-40 > o.left &&
+        return (this.left < o.right &&
+            this.right > o.left &&
             this.top < o.bottom &&
             this.bottom > o.top);
     }
