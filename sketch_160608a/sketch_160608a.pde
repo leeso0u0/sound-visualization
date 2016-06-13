@@ -22,6 +22,8 @@ Player player;
 ArrayList<Block> boxes = new ArrayList<Block>();
 ArrayList<Coin> coins = new ArrayList<Coin>();
 
+PImage bg;
+
 void setup() {
   size(900, 480);
   background(255);
@@ -40,6 +42,11 @@ void draw()
 {
   frameRate(18);
   background(230);
+  pushMatrix();
+  scale(0.2);
+  println(frameCount);
+  image(bg,3500-frameCount,2800);
+  popMatrix();
   fill(0);
   rect(0, 400, width, 80);
   
