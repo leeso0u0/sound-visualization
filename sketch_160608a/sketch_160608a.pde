@@ -25,11 +25,10 @@ ArrayList<Coin> coins = new ArrayList<Coin>();
 void setup() {
   size(900, 480);
   background(255);
-  frameRate(18);
-  player = new Player(80, 344);
+  frameRate(12);
+  player = new Player(80, 284);
   boxes.add(new Block(800, 350));
   coins.add(new Coin(700, 350));
-  imageMode(CENTER);
 }
 
 void keyPressed() {
@@ -43,41 +42,38 @@ void draw()
   background(230);
   fill(0);
   rect(0, 400, width, 80);
-
+  
   for ( Block box : boxes) {
     if (player.isCollision(box)) {
-    //  println("충돌");
+        println("충돌");
     }
     box.move();
-   box.display(); 
-}
+    box.display();
+  }
 
   for ( Coin coin : coins) {
     if (!player.isCollision(coin)) {
       coin.display();
-    }
+    } 
     else {
       coinCount++;
     }
-    coin.move();
+    coin.move();  
   }
-  timer +=0.2;
-  
-  int ran = int(random(100));
-  if (timer > 1) {
-    if ( ran>15) {
-      coins.add(new Coin(1000, 350));
-    }
-    else {
-      boxes.add(new Block(1000,350));
-    }
-    timer=0;
-  }
-  
-  if (isJump) {
-    player.jump();
-  }
-  player.display();
-  println(coinCount);
+    timer +=0.2;
 
+    int ran = int(random(100));
+    if (timer > 1) {
+      if ( ran>15) {
+        coins.add(new Coin(1000, 350));
+      } else {
+        boxes.add(new Block(1000, 350));
+      }
+      timer=0;
+    }
+    if (isJump) {
+      player.jump();
+    }
+    player.display();
+   println(coinCount);
 }

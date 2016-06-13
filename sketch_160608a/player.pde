@@ -6,10 +6,12 @@ class Player extends Unit {
   Player(float tempX, float tempY) {
     x = tempX;
     y = tempY;
-    left = x - (boyXsize / 2);
-    right = x + (boyXsize / 2);
-    top = y - (boyYsize / 2);
-    bottom = y + (boyXsize / 2);
+    Xsize = boyXsize;
+    Ysize = boyYsize;
+    left = x;
+    right = x + Xsize;
+    top = y;
+    bottom = y + Ysize;
 
     boy[0]= loadImage("boy1.png");
     boy[1]= loadImage("boy2.png");
