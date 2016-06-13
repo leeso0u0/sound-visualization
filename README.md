@@ -1,10 +1,12 @@
-done
+# Visual Programming
+
+## Done issues
 
 - 충돌처리
 - 점프에 중력가속도
 - 장애물/ 코인 뿌리기
 
-to do
+## TODO issues
 
 - 점수처리 ( 200개 이상 먹으면 게임 엔딩 )
 - 점수 화면에 나타내기
