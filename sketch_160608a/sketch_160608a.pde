@@ -8,6 +8,7 @@ int playerCurrentFrame = 0;
 int coinCurrentFrame = 0;
 float jump=0;
 
+boolean isEnding = false;
 int blockXsize = 50;
 int blockYsize = 100;
 int boyXsize = 60;
@@ -52,8 +53,10 @@ void setup() {
 }
 
 void keyPressed() {
+  if (!isEnding) {
   isJump = true;
   tPoint = true;
+  }
 }
 
 void draw()
@@ -122,6 +125,7 @@ void draw()
       text(lifeheart[k], 770+(k*35), 50);
     }
   } else {
+    isEnding = true;
     background(230);
     pushMatrix();
     image(bg2, -frameCount/10, -100);
@@ -144,10 +148,10 @@ void draw()
       fill(255, 255);
       image(girl, end, 235);
     } else {
-      pushMatrix();
-      scale(0.2);
-      image(meetGirl, end, 235);
-      popMatrix();
+      background(255);
+       image(meetGirl, 700, 225);
+       fill(0);
+       text("Congratulation!",width/2-120,100);
     }
     return;
   }
