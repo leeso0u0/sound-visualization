@@ -2,6 +2,8 @@ import processing.sound.*;
 
 SoundFile CoinEffect ;
 
+boolean once;
+
 int playerCurrentFrame = 0;
 int coinCurrentFrame = 0;
 float jump=0;
@@ -14,6 +16,7 @@ int flowerXsize = 30;
 int flowerYsize = 30;
 int coinCount = 0;
 int life = 3;
+char[] lifeheart = new char[3];
 
 float timer = 0;
 
@@ -26,17 +29,21 @@ Player player;
 ArrayList<Block> boxes = new ArrayList<Block>();
 ArrayList<Coin> coins = new ArrayList<Coin>();
 
-PImage bg ;
+PImage bg1 ;
+PImage bg2 ;
+
 
 void setup() {
   size(900, 480);
-  bg = loadImage("bg.png");
-  CoinEffect = new SoundFile(this, "coineffect.mp3");
+  bg1 = loadImage("bg1.png");
+  bg2 = loadImage("bg2.png");
+  CoinEffect = new SoundFile(this, "waterdrop.wav");
   background(255);
   frameRate(12);
   player = new Player(90, 224);
   boxes.add(new Block(800, 350));
   coins.add(new Coin(700, 270));
+  for(int k = 0 ; k < 3 ; k++) lifeheart[k] = '♥';
 }
 
 void keyPressed() {
@@ -48,11 +55,13 @@ void draw()
 {
   frameRate(18);
   background(230);
-  
-  
   pushMatrix();
-  scale(0.2);
-  image(bg, -frameCount, 0);
+  image(bg2, -frameCount/10 , -100);
+  popMatrix();
+  pushMatrix();
+  translate(width/2, height/2);
+  scale(0.7);
+  image(bg1, -650-frameCount, -300);
   popMatrix();
   
   fill(0);
@@ -62,6 +71,7 @@ void draw()
       println("Crash");
       box.bIsCollision = false;
       life--;
+      if(life > 0) lifeheart[2-life] = ' ';
     }
     box.move();
     box.display();
@@ -99,18 +109,22 @@ void draw()
   if (coinCount < 50) { 
     textSize(32); 
     text(coinCount, 30, 50);
-  } 
-  else {
+  } else {
     background(0);
     fill(255);
     text("win", width/2, height/2);
     return;
   }
-  
-  if ( life < 1 ){
+
+  if ( life < 1 ) {
     background(0);
     fill(255);
     text("lose ", width/2, height/2);
     return;
-   }
+  }
+  
+  for(int k = 0 ; k<3 ; k++){
+    fill(255,0,0);
+    text(lifeheart[k] , 770+(k*35), 50);
+  }
 }
