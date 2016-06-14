@@ -1,3 +1,6 @@
+import processing.sound.*;
+
+SoundFile CoinEffect ;
 
 int playerCurrentFrame = 0;
 int coinCurrentFrame = 0;
@@ -28,6 +31,7 @@ PImage bg ;
 void setup() {
   size(900, 480);
   bg = loadImage("bg.png");
+  CoinEffect = new SoundFile(this, "coineffect.mp3");
   background(255);
   frameRate(12);
   player = new Player(90, 224);
@@ -71,6 +75,7 @@ void draw()
       } else {
         coin.bIsDraw = false;
         coinCount++;
+        CoinEffect.play();
       }
       coin.move();
     }
@@ -91,7 +96,7 @@ void draw()
   }
   player.display();
 
-  if (coinCount < 50) {
+  if (coinCount < 50) { 
     textSize(32); 
     text(coinCount, 30, 50);
   } 
