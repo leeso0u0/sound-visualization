@@ -54,8 +54,8 @@ void setup() {
 
 void keyPressed() {
   if (!isEnding) {
-  isJump = true;
-  tPoint = true;
+    isJump = true;
+    tPoint = true;
   }
 }
 
@@ -137,22 +137,21 @@ void draw()
     popMatrix();
     fill(0);
     rect(0, 400, width, 80);
+    meet+=3;
+    end = width - meet ;
 
-    if (player.right < 700) {
-      meet+=3;
-      end = width - meet;
+    player.move();
+    player.display();
+    fill(255, 255);
+    image(girl, end, 235);
 
-      player.move();
-      player.display();
-
-      fill(255, 255);
-      image(girl, end, 235);
-    } else {
+    if (player.right > end-5) {
       background(255);
-       image(meetGirl, 700, 225);
-       fill(0);
-       text("Congratulation!",width/2-120,100);
+      image(meetGirl, width/2-40, 225);
+      fill(0);
+      text("Congratulation!", width/2-120, 100);
     }
+
     return;
   }
 
