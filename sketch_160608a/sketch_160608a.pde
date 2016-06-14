@@ -29,6 +29,7 @@ Player player;
 ArrayList<Block> boxes = new ArrayList<Block>();
 ArrayList<Coin> coins = new ArrayList<Coin>();
 
+PImage girl;
 PImage bg1 ;
 PImage bg2 ;
 
@@ -37,6 +38,7 @@ void setup() {
   size(900, 480);
   bg1 = loadImage("bg1.png");
   bg2 = loadImage("bg2.png");
+  girl = loadImage("girl.png");
   CoinEffect = new SoundFile(this, "waterdrop.wav");
   background(255);
   frameRate(12);
@@ -106,18 +108,29 @@ void draw()
   }
   player.display();
 
-  if (coinCount < 50) { 
+  if (coinCount < 10) { 
     textSize(32); 
     text(coinCount, 30, 50);
   } else {
-    background(0);
-    fill(255);
-    text("win", width/2, height/2);
+    background(255);
+    pushMatrix();
+    translate(width/2,height/2);
+    scale(0.5);
+    image(girl,0,-200);
+    popMatrix();
+    pushMatrix();
+    translate(width/2,height/2);
+    scale(1.5);
+    translate(-450+frameCount,-290);
+    player.display();
+    popMatrix();
+    fill(0);
+    //text("win", width/2, height/2);
     return;
   }
 
   if ( life < 1 ) {
-    background(0);
+    background(180);
     fill(255);
     text("lose ", width/2, height/2);
     return;
