@@ -156,9 +156,12 @@ void draw()
   }
 
   if ( life < 1 ) {
+    CoinEffect.stop();
     background(0);
     fill(255);
     text("lose ", width/2, height/2);
-    return;
+    coinCount = 0;
+    
+    return ;
   }
 }
