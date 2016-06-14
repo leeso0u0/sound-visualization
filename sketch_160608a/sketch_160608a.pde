@@ -24,6 +24,8 @@ float t = 1;
 boolean tPoint = false;
 float s = 0;
 boolean isJump = false;
+int meet = 0;
+int end = 0;
 
 Player player;
 ArrayList<Block> boxes = new ArrayList<Block>();
@@ -32,7 +34,6 @@ ArrayList<Coin> coins = new ArrayList<Coin>();
 PImage girl;
 PImage bg1 ;
 PImage bg2 ;
-
 
 void setup() {
   size(900, 480);
@@ -76,14 +77,14 @@ void draw()
       if(life > 0) lifeheart[2-life] = ' ';
     }
     box.move();
-    box.display();
+    if(coinCount < 10) box.display();
   }
 
   for ( Coin coin : coins) {
     if (coin.bIsDraw)
     {
       if ( !player.isCollision(coin)) {
-        coin.display();
+        if(coinCount < 10) coin.display();
       } else {
         coin.bIsDraw = false;
         coinCount++;
@@ -112,25 +113,20 @@ void draw()
     textSize(32); 
     text(coinCount, 30, 50);
   } else {
-    background(255);
-    pushMatrix();
-    translate(width/2,height/2);
-    scale(0.5);
-    image(girl,0,-200);
-    popMatrix();
-    pushMatrix();
-    translate(width/2,height/2);
-    scale(1.5);
-    translate(-450+frameCount,-290);
-    player.display();
-    popMatrix();
-    fill(0);
-    //text("win", width/2, height/2);
+    meet+=3;
+    end = width - meet ;
+   
+    player.move();
+    fill(255,255);
+    image(girl, end, 235);
+    
+    if(player.right > end-5) delay(3000);
+  
     return;
   }
 
   if ( life < 1 ) {
-    background(180);
+    background(0);
     fill(255);
     text("lose ", width/2, height/2);
     return;

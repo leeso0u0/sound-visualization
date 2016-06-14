@@ -30,12 +30,14 @@ class Player extends Unit {
   void jump() {
     if (tPoint) {
       t+=0.2;
-      s = 5 * t - 9*t*t*0.5;      y = y+s;
-      
-if (t > 3) 
+      s = 5 * t - 9*t*t*0.5;      
+      y = y+s;
+
+      if (t > 3) 
       {
-        tPoint = false;}    } 
-      else {
+        tPoint = false;
+      }
+    } else {
       s = 5 * t - 9*t*t*0.5;
       y = y-s;
       t-=0.2;
@@ -47,6 +49,14 @@ if (t > 3)
     left = x ;
     right = x + boyXsize;
     top = y;
-    bottom = y + boyYsize; 
-}
+    bottom = y + boyYsize;
+  }
+
+  void move() {
+    x+=10;
+    left = x;
+    right = x + Xsize;
+    top = y;
+    bottom = y + Ysize;
+  }
 }
