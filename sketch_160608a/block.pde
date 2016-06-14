@@ -1,6 +1,6 @@
 
 class Block extends Unit {
-
+  boolean bIsCollision;
   Block(float tempX, float tempY) {
     x = tempX;
     y = tempY;
@@ -9,11 +9,12 @@ class Block extends Unit {
     left = x;
     right = x + Xsize;
     top = y;
-    bottom = y + Xsize;
+    bottom = y + Ysize;
+    bIsCollision = true;
   }
   
   void display() {
-    rect(x, y, blockXsize, blockYsize);
+    rect(x, y, Xsize, Ysize);
   }
 
 }

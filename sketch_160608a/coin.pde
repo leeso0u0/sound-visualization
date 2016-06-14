@@ -1,6 +1,7 @@
 
 class Coin extends Unit {
   PImage flower;
+  boolean bIsDraw;
 
   Coin(float tempX, float tempY) {
     x = tempX;
@@ -12,9 +13,20 @@ class Coin extends Unit {
     top = y;
     bottom = y + Xsize;
     flower= loadImage("F1.png");
+    bIsDraw = true;
   }
 
   void display() {
-    image(flower, x, y);
+    if(bIsDraw)
+    {
+      image(flower, x, y);
+    }
   }
+    void move() {
+    x-=20;
+    left = x;
+    right = x + Xsize;
+    top = y;
+    bottom = y + Ysize;
+    }
 }

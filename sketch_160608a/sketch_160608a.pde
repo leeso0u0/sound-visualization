@@ -3,13 +3,14 @@ int playerCurrentFrame = 0;
 int coinCurrentFrame = 0;
 float jump=0;
 
-int blockXsize = 30;
-int blockYsize = 50;
-int boyXsize = 64;
-int boyYsize = 120;
+int blockXsize = 50;
+int blockYsize = 100;
+int boyXsize = 60;
+int boyYsize = 170;
 int flowerXsize = 30;
 int flowerYsize = 30;
 int coinCount = 0;
+int life = 3;
 
 float timer = 0;
 
@@ -29,9 +30,9 @@ void setup() {
   bg = loadImage("bg.png");
   background(255);
   frameRate(12);
-  player = new Player(80, 284);
+  player = new Player(90, 224);
   boxes.add(new Block(800, 350));
-  coins.add(new Coin(700, 350));
+  coins.add(new Coin(700, 270));
 }
 
 void keyPressed() {
@@ -43,53 +44,68 @@ void draw()
 {
   frameRate(18);
   background(230);
+  
+  
   pushMatrix();
   scale(0.2);
-  image(bg,-frameCount,0);
+  image(bg, -frameCount, 0);
   popMatrix();
+  
   fill(0);
   rect(0, 400, width, 80);
-  
   for ( Block box : boxes) {
-    if (player.isCollision(box)) {
-        println("Crash");
+    if (box.bIsCollision && player.isCollision(box)) {
+      println("Crash");
+      box.bIsCollision = false;
+      life--;
     }
     box.move();
     box.display();
   }
 
   for ( Coin coin : coins) {
-    if (!player.isCollision(coin)) {
-      coin.display();
-    } 
-    else {
-      coinCount++;
-    }
-    coin.move();  
-  }
-    timer +=0.2;
-
-    int ran = int(random(100));
-    if (timer > 1) {
-      if ( ran>15) {
-        coins.add(new Coin(1000, 350));
+    if (coin.bIsDraw)
+    {
+      if ( !player.isCollision(coin)) {
+        coin.display();
       } else {
-        boxes.add(new Block(1000, 350));
+        coin.bIsDraw = false;
+        coinCount++;
       }
-      timer=0;
+      coin.move();
     }
-    if (isJump) {
-      player.jump();
+  }
+  timer +=0.2;
+
+  int ran = int(random(100));
+  if (timer > 1) {
+    if ( ran>15) {
+      coins.add(new Coin(1000, 300));
+    } else {
+      boxes.add(new Block(1000, 350));
     }
-    player.display();
-   //println(coinCount);
-   if (coinCount < 30) {
+    timer=0;
+  }
+  if (isJump) {
+    player.jump();
+  }
+  player.display();
+
+  if (coinCount < 50) {
     textSize(32); 
     text(coinCount, 30, 50);
-  }
-  else{
+  } 
+  else {
     background(0);
     fill(255);
-    text("The End", width/2-90, height/2);
+    text("win", width/2, height/2);
+    return;
   }
+  
+  if ( life < 1 ){
+    background(0);
+    fill(255);
+    text("lose ", width/2, height/2);
+    return;
+   }
 }
