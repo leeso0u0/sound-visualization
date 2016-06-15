@@ -61,10 +61,9 @@ void keyPressed() {
 
 void draw()
 {
-
   frameRate(18);
 
-  if (coinCount < 10 ) { 
+  if (coinCount < 50 ) { 
     background(230);
     pushMatrix();
     image(bg2, -frameCount/10, -100);
@@ -88,14 +87,14 @@ void draw()
         if (life > 0) lifeheart[2-life] = ' ';
       }
       box.move();
-      if (coinCount < 10) box.display();
+      if (coinCount < 50) box.display();
     }
 
     for ( Coin coin : coins) {
       if (coin.bIsDraw)
       {
         if ( !player.isCollision(coin)) {
-          if (coinCount < 10) coin.display();
+          if (coinCount < 50) coin.display();
         } else {
           coin.bIsDraw = false;
           coinCount++;
@@ -139,7 +138,8 @@ void draw()
     rect(0, 400, width, 80);
     meet+=3;
     end = width - meet ;
-
+    
+    player.y = 224 ; 
     player.move();
     player.display();
     fill(255, 255);

@@ -24,12 +24,17 @@ class Player extends Unit {
     image(boy[playerCurrentFrame], x, y);
     if (!isJump) {
       playerCurrentFrame = (playerCurrentFrame+1) % playerImageCount;
-    } else playerCurrentFrame = 3;
+    } 
+    else if(isEnding == true){
+      playerCurrentFrame = (playerCurrentFrame+1) % playerImageCount;
+    }
+    else playerCurrentFrame = 3;
   }
 
   void jump() {
     if (tPoint) {
       t+=0.2;
+      println(t);
       s = 5 * t - 9*t*t*0.5;      
       y = y+s;
 
@@ -44,7 +49,7 @@ class Player extends Unit {
       if (t <= 1) {
         isJump = false;
       }
-    }
+   }
 
     left = x ;
     right = x + boyXsize;
